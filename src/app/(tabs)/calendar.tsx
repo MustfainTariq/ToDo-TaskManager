@@ -62,7 +62,7 @@ export default function CalendarScreen() {
     }
   };
 
-  const handleTaskPress = (task) => {
+  const handleTaskPress = (task: DocumentData) => {
     navigation.navigate("Task", {
       id: task.id,
       title: task.title,
@@ -75,10 +75,10 @@ export default function CalendarScreen() {
 
   return (
     <View style={styles.container}>
-      <MaterialIcons name="logout" size={30} color="black" style={styles.logout} onPress={handleLogout} />
+      <MaterialIcons name="logout" size={24} color="black" style={styles.logout} onPress={handleLogout} />
       
       <Calendar
-        onDayPress={(day) => setSelectedDate(day.dateString)}
+        onDayPress={(day: { dateString: React.SetStateAction<string>; }) => setSelectedDate(day.dateString)}
         markedDates={{
           [selectedDate]: { selected: true, selectedColor: '#583491' },
         }}
@@ -121,9 +121,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   logout: {
-    position: 'absolute',
-    top: 10,
-    right: 20,
+  alignSelf: 'flex-end',
+  marginRight: 20,
+  marginBottom: 20,
+  top: 10,
   },
   taskContainer: {
     padding: 20,

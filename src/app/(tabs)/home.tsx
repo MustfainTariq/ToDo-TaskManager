@@ -61,11 +61,11 @@ export default function HomeScreen() {
       const newIsFinishedStatus = !taskToUpdate.isFinished;
   
       // Optimistically update the UI
-      setTasks(prevTasks =>
-        prevTasks.map(task =>
-          task.id === taskId ? { ...task, isFinished: newIsFinishedStatus } : task
-        )
+      const updatedTasks = tasks.map(task =>
+        task.id === taskId ? { ...task, isFinished: newIsFinishedStatus } : task
       );
+      setTasks(updatedTasks);
+      setFilteredTasks(updatedTasks.filter(task => selectedCategory === 'All' || task.category === selectedCategory));
   
       // Update Firestore with the new status
       const taskRef = doc(FIREBASE_DB, `users/${user?.uid}/tasks/${taskId}`);
@@ -76,16 +76,11 @@ export default function HomeScreen() {
       console.log(`Marked task ${taskId} as complete`);
     } catch (error) {
       console.error('Error marking task as complete: ', error);
-  
-      // Revert the UI update in case of error
-      setTasks(prevTasks =>
-        prevTasks.map(task =>
-          task.id === taskId ? { ...task, isFinished: !task.isFinished } : task
-        )
-      );
       alert('Failed to update task. Please try again.');
     }
   };
+  
+
   
 
   const deleteTask = async (taskId: string) => {
@@ -267,7 +262,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: screenWidth - 60,
     color: '#583491',
-    fontWeight: 'bold',
   },
   check: {
     position: 'absolute',
