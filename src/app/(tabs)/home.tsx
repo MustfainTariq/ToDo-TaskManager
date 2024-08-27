@@ -137,7 +137,7 @@ export default function HomeScreen() {
         <View style={styles.categoryContainer}>
           {categories.map((category, index) => (
             <TouchableOpacity key={index} onPress={() => changeCategory(category)}>
-              <Text style={styles.categoryButton}>{category}</Text>
+             <Text style={[styles.categoryButton, selectedCategory === category && styles.selectedCategory]}>{category}</Text>
             </TouchableOpacity>
           ))}
         </View> 
@@ -210,7 +210,7 @@ export default function HomeScreen() {
       <View style={styles.categoryContainer}>
         {categories.map((category, index) => (
           <TouchableOpacity key={index} onPress={() => changeCategory(category)}>
-            <Text style={styles.categoryButton}>{category}</Text>
+            <Text style={[styles.categoryButton, selectedCategory === category && styles.selectedCategory]}>{category}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   categoryButton: {
-    width: screenWidth / 5 - 20,
+    width: screenWidth / 5-10,
     height: 30,
     textAlign: 'center',
     borderRadius: 20,
@@ -244,6 +244,11 @@ const styles = StyleSheet.create({
     borderColor: '#583491',
     color: '#583491',
     marginHorizontal: 5, // Added horizontal margin to add space between categories
+    fontSize: 12,
+  },
+  selectedCategory: {
+    backgroundColor: '#583491',
+    color: 'white',
   },
   title: {
     left: 30,
